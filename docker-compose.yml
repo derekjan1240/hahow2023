@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  hahow-hero-app:
+    build:
+      context: .
+    ports:
+      - '3000:3000'
+    depends_on:
+      - hahow-hero-app-db
+      - hahow-hero-app-redis
+
+  hahow-hero-app-redis:
+    image: redis:latest
+    ports:
+      - '6379:6379'
+
+  hahow-hero-app-db:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: hahow
+      MYSQL_USER: derek
+      MYSQL_PASSWORD: example
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - '3306:3306'
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
